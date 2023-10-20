@@ -1,10 +1,14 @@
 import './App.css';
-import Header from './Components/Header/Header';
+// import Header from './Components/Header/Header';
+
+const Person = {
+  name: 'text'
+}
 
 function App() {
   return (
     <div className="App">
-        <Header />
+        <h1>{Person.name}</h1>
     </div>
   );
 }
