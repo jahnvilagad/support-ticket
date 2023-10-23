@@ -1,32 +1,51 @@
-// import { Profiler } from 'react';
+import { useState } from 'react';
 import './App.css';
-// import Header from './Components/Header/Header';
-import { recipes } from './Data';
-
-// function Person()  {
-//     return (
-//       <img src="https://i.imgur.com/MK3eW3As.jpg" alt="Katherine Johnson"/>
-//     )
-// }
+// import { recipes } from './Data';
+import React from 'react';
+import { sculptureList } from './Data';
 
 
 function App() {
+  const [index, SetIndex] = useState(0);
+  const [showMore, setshowMore] = useState(false);
+  const hasNext = index < sculptureList.length - 1;
+
+  function handleNextclick() {
+    if (hasNext) {
+      SetIndex(index + 1);
+    } else {
+      SetIndex(0);
+    }
+  }
+
+  function handleMoreclick() {
+    setshowMore(!showMore);
+  }
+
+
+  let sculpture = sculptureList[index];
+
   return (
-    <div>
-      <h1>Recipes</h1>
-      {recipes.map(recipe =>
-        <div key={recipe.id}>
-          <h2>{recipe.name}</h2>
-          <ul>
-            {recipe.ingredients.map(ingredient =>
-              <li key={ingredient}>
-                {ingredient}
-              </li>
-            )}
-          </ul>
-        </div>
-      )}
-    </div>
+    <>
+      <button onClick={handleNextclick}>
+        Next
+      </button>
+      <h2>
+        <i>{sculpture.name}</i>
+        by {sculpture.artist}
+      </h2>
+      <h3>
+        ({index + 1} of {sculptureList.length})
+      </h3>
+      <button onClick={handleMoreclick}>
+        {showMore ? 'Hide' : 'show'} details
+      </button>
+      {showMore && <p>{sculpture.description}</p>}
+      <img
+        src={sculpture.url}
+        alt={sculpture.alt}
+      />
+    </>
   );
 }
 
