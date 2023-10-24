@@ -2,49 +2,31 @@ import { useState } from 'react';
 import './App.css';
 // import { recipes } from './Data';
 import React from 'react';
-import { sculptureList } from './Data';
+// import { sculptureList } from './Data';
+
+
+let nextId = 0;
 
 
 function App() {
-  const [index, SetIndex] = useState(0);
-  const [showMore, setshowMore] = useState(false);
-  const hasNext = index < sculptureList.length - 1;
-
-  function handleNextclick() {
-    if (hasNext) {
-      SetIndex(index + 1);
-    } else {
-      SetIndex(0);
-    }
-  }
-
-  function handleMoreclick() {
-    setshowMore(!showMore);
-  }
-
-
-  let sculpture = sculptureList[index];
+  const [name, Setname] = useState('');
+  const [artists, setartists] = useState([]);
 
   return (
     <>
-      <button onClick={handleNextclick}>
-        Next
-      </button>
-      <h2>
-        <i>{sculpture.name}</i>
-        by {sculpture.artist}
-      </h2>
-      <h3>
-        ({index + 1} of {sculptureList.length})
-      </h3>
-      <button onClick={handleMoreclick}>
-        {showMore ? 'Hide' : 'show'} details
-      </button>
-      {showMore && <p>{sculpture.description}</p>}
-      <img
-        src={sculpture.url}
-        alt={sculpture.alt}
-      />
+     <h1>Inspiring sculptors:</h1>
+     <input value={name} onChange={e => Setname(e.target.value)}/>
+     <button onClick={() => {
+      setartists([
+        ...artists,
+        {id: nextId++, name: name }
+      ]);
+     }}>Add</button>
+     <ul>
+      {artists.map(artist => (
+        <li key={artist.id}>{artist.name}</li>
+      ))}
+     </ul>
     </>
   );
 }
