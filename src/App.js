@@ -1,32 +1,56 @@
-import { useState } from 'react';
+import { Children, useState } from 'react';
 import './App.css';
 // import { recipes } from './Data';
 import React from 'react';
 // import { sculptureList } from './Data';
 
 
-let nextId = 0;
+function Panel({
+  title,
+  children,
+  isActive,
+  onShow
+
+}){
+  return(
+    <section className='panel'>
+        <h3>{title}</h3>
+        {isActive ? (
+          <p>{children}</p>
+        ) : (
+          <button onClick={onShow}>
+            show
+          </button>
+        )}
+    </section>
+  )
+}
 
 
 function App() {
-  const [name, Setname] = useState('');
-  const [artists, setartists] = useState([]);
+  const [activeIndex, SetactiveIndex] = useState(0);
 
+  
   return (
     <>
-     <h1>Inspiring sculptors:</h1>
-     <input value={name} onChange={e => Setname(e.target.value)}/>
-     <button onClick={() => {
-      setartists([
-        ...artists,
-        {id: nextId++, name: name }
-      ]);
-     }}>Add</button>
-     <ul>
-      {artists.map(artist => (
-        <li key={artist.id}>{artist.name}</li>
-      ))}
-     </ul>
+     <h2>Almaty, Kazakhstan</h2>
+     <Panel
+      title="About"
+      isActive={activeIndex === 0}
+      onshow={() => SetactiveIndex(0)}
+     >
+
+      Lorem Ipsum
+     </Panel>
+
+     <Panel
+      title="Etymology"
+      isActive={activeIndex === 1}
+      onshow={() => SetactiveIndex(1)}
+     >
+
+      Lorem Ipsum
+     </Panel>
     </>
   );
 }
